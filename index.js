@@ -53,7 +53,32 @@ app.get("/artCraft/email/:email",async(req,res)=>{
 
 app.get('/artCraft/:id',async(req,res)=>{
     const id = req.params.id;
-    
+    const query = {_id:new ObjectId(id)}
+    const result = await artCollection.findOne(query)
+    res.send(result)
+})
+
+app.put('/artCraft/:id',async(req,res) =>{
+    const id =req.params.id;
+    const filter = {_id:new ObjectId(id)}
+    const options = {upsert:true}
+    const updatedCraft=req.body;
+    const craft ={
+        $set:{
+            processing_time:updatedCraft.processing_time,
+            rating:updatedCraft.rating,
+            price:updatedCraft.price,
+            short_description:updatedCraft.short_description,
+            stockStatus:updatedCraft.stockStatus,
+            customization:updatedCraft.customization,
+            image:updatedCraft.image,
+            subcategory_name:updatedCraft.subcategory_name,
+            item_name:updatedCraft.item_name,
+        }
+
+    }
+    const result = await artCollection.updateOne(filter,craft,options)
+    res.send(result)
 })
 
 app.delete('/artCraft/:id',async(req,res)=>{
