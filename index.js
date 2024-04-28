@@ -3,7 +3,7 @@ const cors = require('cors');
 require("dotenv").config();
 const app= express();
 const port =process.env.PORT || 5000;
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 // midware
 app.use(cors());
@@ -35,6 +35,23 @@ app.get('/artCraft',async(req,res)=>{
     const cursor = artCollection.find()
     const result = await cursor.toArray();
     res.send(result);
+})
+
+app.get("/artCraft/:id",async(req,res)=>{
+    const id =req.params.id;
+    const query ={_id:new ObjectId(id)};
+    const result = await artCollection.findOne(query);
+    res.send(result);
+});
+
+app.get("/addcraft/:email",async(req,res)=>{
+    // const email = req.params.email;
+    // const queryEmail = {user_email:new ObjectId(email)}
+    // const result = await artCollection.find(queryEmail).toArray();
+    // res.send(result)
+    console.log(req.params);
+    const result =await artCollection.find({email:req.user_params}).toArray()
+    res.send(result)
 })
 
     app.post('/artCraft',async(req,res)=>{
