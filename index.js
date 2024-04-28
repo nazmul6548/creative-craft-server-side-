@@ -51,6 +51,11 @@ app.get("/artCraft/email/:email",async(req,res)=>{
     res.send(result)
 })
 
+app.get('/artCraft/:id',async(req,res)=>{
+    const id = req.params.id;
+    
+})
+
 app.delete('/artCraft/:id',async(req,res)=>{
     const id = req.params.id;
     const query = {_id :new ObjectId(id)}
