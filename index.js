@@ -44,14 +44,19 @@ app.get("/artCraft/:id",async(req,res)=>{
     res.send(result);
 });
 
-app.get("/addcraft/:email",async(req,res)=>{
-    // const email = req.params.email;
-    // const queryEmail = {user_email:new ObjectId(email)}
-    // const result = await artCollection.find(queryEmail).toArray();
-    // res.send(result)
-    console.log(req.params);
-    const result =await artCollection.find({email:req.user_params}).toArray()
+app.get("/artCraft/email/:email",async(req,res)=>{
+ 
+    console.log(req.params.email);
+    const result =await artCollection.find({user_email:req.params.email}).toArray()
     res.send(result)
+})
+
+app.delete('/artCraft/:id',async(req,res)=>{
+    const id = req.params.id;
+    const query = {_id :new ObjectId(id)}
+    const result = await artCollection.deleteOne(query)
+    res.send(result)
+
 })
 
     app.post('/artCraft',async(req,res)=>{
