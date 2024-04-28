@@ -28,6 +28,7 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
 const artCollection = client.db('craftArtDB').collection('artCraft');
+const newDataCollection=client.db('subcategoryDB').collection('subCat');
 
 
 
@@ -37,12 +38,21 @@ app.get('/artCraft',async(req,res)=>{
     res.send(result);
 })
 
+app.get('/subCat',async(req,res)=>{
+    const cursor = newDataCollection.find();
+    const result = await cursor.toArray();
+    res.send(result);
+    console.log(result);
+});
+
 app.get("/artCraft/:id",async(req,res)=>{
     const id =req.params.id;
     const query ={_id:new ObjectId(id)};
     const result = await artCollection.findOne(query);
     res.send(result);
 });
+
+
 
 app.get("/artCraft/email/:email",async(req,res)=>{
  
