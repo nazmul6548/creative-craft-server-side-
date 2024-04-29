@@ -42,7 +42,7 @@ app.get('/subCat',async(req,res)=>{
     const cursor = newDataCollection.find();
     const result = await cursor.toArray();
     res.send(result);
-    console.log(result);
+    // console.log(result);
 });
 
 app.get("/artCraft/:id",async(req,res)=>{
@@ -58,6 +58,15 @@ app.get("/artCraft/email/:email",async(req,res)=>{
  
     console.log(req.params.email);
     const result =await artCollection.find({user_email:req.params.email}).toArray()
+    res.send(result)
+})
+
+
+app.get('/artCraft/category/:subcategory_name',async(req,res) =>  {
+    console.log(req.params.subcategory_name)
+    // const result = await artCollection.find({subcategory_name:req.params.subcategory_name}).toArray()
+    // res.send(result)
+    const result = await artCollection.find({subcategory_name:req.params.subcategory_name}).toArray()
     res.send(result)
 })
 
@@ -101,7 +110,7 @@ app.delete('/artCraft/:id',async(req,res)=>{
 
     app.post('/artCraft',async(req,res)=>{
         const newArtCraft =req.body;
-        console.log(newArtCraft);
+        // console.log(newArtCraft);
         const result = await artCollection.insertOne(newArtCraft);
         res.send(result);
 
